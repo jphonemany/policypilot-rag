@@ -1,12 +1,13 @@
 # Roadmap
 
 ## Milestone 1: Ingestion (week 1)
-- [ ] Scaffold Spring Boot 3 (Java 21, Maven) with Docker Compose for PostgreSQL + pgvector
-- [ ] Download the NIST SP 800-53 Rev 5 OSCAL catalog JSON into `data/` with a fetch script
-- [ ] Parse controls and enhancements into chunks keyed by control ID (for example AC-2, AC-2(3))
-- [ ] Flyway schema: controls table with tsvector column and pgvector embedding column
-- [ ] Ingest CLI that embeds chunks through an OpenAI-compatible endpoint, with a unit test on the parser
-- [ ] GitHub Actions CI: build and run tests on every push
+- [x] Scaffold Spring Boot 3.5 (Java 17, Maven) on local PostgreSQL 16
+- [x] Download the NIST SP 800-53 Rev 5 OSCAL catalog JSON into `data/` with a fetch script (pinned commit + SHA-256)
+- [x] Parse controls and enhancements into chunks keyed by control ID (for example AC-2, AC-2(3)): 1,014 chunks
+- [x] Flyway schema: controls table with weighted tsvector column and REAL[] embedding column (pgvector deferred: 1,014 rows rank in memory)
+- [x] Ingest CLI that embeds chunks through an OpenAI-compatible endpoint (local Ollama), skipping unchanged chunks by content hash
+- [x] GitHub Actions CI: build and run 19 tests (unit + real-Postgres integration) on every push
+- [ ] Read docs/walkthrough-m1.md, then run `/rederive` in this repo
 
 ## Milestone 2: Retrieval and grounded answers (week 2)
 - [ ] Hybrid search: full-text rank + vector similarity, merged with reciprocal rank fusion

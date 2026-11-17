@@ -9,8 +9,19 @@ Ask questions about federal security policy in plain English and get answers tha
 - **Measured quality:** most RAG demos stop at "it answered". This one reports recall@5, MRR, citation precision and refusal accuracy, and fails the build if they drop.
 - **Continues your signature:** grounded output with a hard validator, as in fundtrack's dollar check and ai-music-discovery's artist validator.
 
-## Planned stack
-Spring Boot 3 (Java 21) · Spring AI · PostgreSQL + pgvector (hybrid: full-text + vector) · Angular · Docker Compose · Terraform on AWS · GitHub Actions. Any OpenAI-compatible model: a local FreeLLMAPI or Ollama for development.
+## Stack
+Spring Boot 3.5 (Java 17) · PostgreSQL 16 (weighted full-text search + embeddings, hybrid retrieval) · Flyway · any OpenAI-compatible model (local Ollama by default) · GitHub Actions. Planned: Angular UI, Terraform on AWS (RDS with pgvector).
+
+## Run it locally
+Needs Java 17, Maven, PostgreSQL 16 (user `postgres`, databases `policypilot` and `policypilot_test`) and [Ollama](https://ollama.com) with `ollama pull all-minilm`.
+
+```powershell
+scripts\fetch-catalog.ps1                                     # NIST catalog, pinned + hash-checked
+mvn spring-boot:run "-Dspring-boot.run.arguments=ingest"      # 1,014 controls → Postgres, embedded locally
+mvn test                                                      # 19 tests incl. real-Postgres integration
+```
+
+Override the database or model with `PP_DB_URL`, `PP_EMBED_URL`, `PP_EMBED_MODEL` (see `application.yml`). How it works, step by step: [docs/walkthrough-m1.md](docs/walkthrough-m1.md).
 
 ## Data
 NIST SP 800-53 Rev. 5 controls in OSCAL JSON (public domain, from the `usnistgov/oscal-content` repository), chunked by control and enhancement ID so citations are exact.

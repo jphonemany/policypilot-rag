@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+# Read-only token: this workflow only builds and tests.
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    services:
+      # Real Postgres for the integration tests (tsvector ranking and arrays are Postgres behavior).
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: policypilot_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+
+      # Pinned commit + SHA-256 check, so the full-catalog test always sees the same data.
+      - name: Fetch NIST 800-53 catalog
+        run: bash scripts/fetch-catalog.sh
+
+      - name: Build and test
+        run: mvn -B verify
+        env:
+          PP_TEST_DB_URL: jdbc:postgresql://localhost:5432/policypilot_test

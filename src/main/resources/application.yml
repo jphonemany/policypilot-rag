@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: policypilot
+  datasource:
+    url: ${PP_DB_URL:jdbc:postgresql://localhost:5432/policypilot}
+    username: ${PP_DB_USER:postgres}
+    password: ${PP_DB_PASSWORD:postgres}
+  flyway:
+    enabled: true
+
+policypilot:
+  catalog-path: ${PP_CATALOG:data/NIST_SP-800-53_rev5_catalog.json}
+  embeddings:
+    # Any OpenAI-compatible /v1/embeddings endpoint. Default: local Ollama (free, offline).
+    base-url: ${PP_EMBED_URL:http://localhost:11434/v1}
+    api-key: ${PP_EMBED_KEY:ollama}
+    model: ${PP_EMBED_MODEL:all-minilm}
+    batch-size: ${PP_EMBED_BATCH:32}
