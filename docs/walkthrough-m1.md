@@ -1,8 +1,6 @@
 # Milestone 1 walkthrough: ingestion
 
-What got built, why each piece is shaped the way it is, and what an interviewer is likely to ask.
-Read it top to bottom once, then run `/rederive` in this repo and see if you can re-derive the
-decisions without looking.
+What got built in Milestone 1, and why each piece is shaped the way it is.
 
 ## The problem
 

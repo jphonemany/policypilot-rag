@@ -7,7 +7,7 @@
 - [x] Flyway schema: controls table with weighted tsvector column and REAL[] embedding column (pgvector deferred: 1,014 rows rank in memory)
 - [x] Ingest CLI that embeds chunks through an OpenAI-compatible endpoint (local Ollama), skipping unchanged chunks by content hash
 - [x] GitHub Actions CI: build and run 19 tests (unit + real-Postgres integration) on every push
-- [ ] Read docs/walkthrough-m1.md, then run `/rederive` in this repo
+- [ ] Review the Milestone 1 design notes in docs/walkthrough-m1.md and update them where the code changed
 
 ## Milestone 2: Retrieval and grounded answers (week 2)
 - [ ] Hybrid search: full-text rank + vector similarity, merged with reciprocal rank fusion
