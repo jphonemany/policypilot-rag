@@ -9,4 +9,4 @@ dist/
 *.tfstate*
 # 10 MB download; scripts/fetch-catalog.* recreates it byte-for-byte (pinned commit + SHA-256).
 data/*.json
-.rederive/
+ROADMAP.md

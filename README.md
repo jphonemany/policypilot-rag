@@ -31,4 +31,3 @@ NIST SP 800-53 Rev. 5 controls in OSCAL JSON (public domain, from the `usnistgov
 - `docs/evals.md` with the latest eval table, and the CI job that produces it
 - 80%+ backend test coverage on retrieval and validation code
 
-See [ROADMAP.md](ROADMAP.md) for milestones. github-auto feeds the next unchecked tasks into your daily TODAY.md.
